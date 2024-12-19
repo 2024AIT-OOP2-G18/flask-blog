@@ -6,6 +6,40 @@
     <title>表示画面</title>
 </head>
 <body>
-    表示する画面(おく)
+    <h3>現在投稿されているブログ</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>&nbsp;</th>
+                <th>ブログ一覧</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- sample(データベース)の変数名は仮 -->
+            <!-- {% for sample in samples %} -->
+            <!-- <tr>
+                <td>&nbsp;</td>
+                <td>
+                    <a href="{{ url_for('view.detail', sample_id=sample.id) }}">
+                        {{ sample.title }}
+                    </a>
+                </td>
+            </tr> -->
+            <!-- {% endfor %} -->
+            <!-- 仮表示用 -->
+            <tr>
+                <td>&nbsp;</td>
+                <td><a href="{{ url_for('view.detail', sample_id=sample.id) }}">〜今日の献立〜</a></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td><a href="{{ url_for('view.detail', sample_id=sample.id) }}">〜最近会ったこと〜</a></td>
+            </tr>
+            <tr>
+                <td>&nbsp;</td>
+                <td><a href="{{ url_for('view.detail', sample_id=sample.id) }}">〜車でドライブ〜</a></td>
+            </tr>
+        </tbody>
+    </table>
 </body>
 </html>

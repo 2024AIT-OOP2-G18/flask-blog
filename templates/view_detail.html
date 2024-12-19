@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ブログの内容 ここにブログのタイトルが入る</title>
+    <title>投稿詳細</title>
 </head>
 <body>
-    ブログの内容(おく)
+    <!-- sample(データベース)の変数名は仮 -->
+    <form action="{{ url_for('view.detail',sample_id = sample.id) }}" method="post">
+        <h1>{{ sample.title }}</h1>
+        <h2>{{ sample.detail }}</h2>
+    </form>
 </body>
 </html>
