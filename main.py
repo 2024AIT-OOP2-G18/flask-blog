@@ -18,6 +18,10 @@ def home():
 def viewe():
     return blog_list()
 
+# 詳細表示
+@app.route('/view/<int:blog_id>')
+def view_detail(blog_id):
+    return blog_detail(blog_id)
 
 if __name__ == '__main__':
     
