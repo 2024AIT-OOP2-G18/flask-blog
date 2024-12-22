@@ -1,13 +1,11 @@
-from peewee import *
-import datetime
-
-from peewee import Model, CharField, SqliteDatabase
+from peewee import Model, SqliteDatabase, CharField, TextField, IntegerField, DateTimeField
 
 # ブログモデル
 db = SqliteDatabase('database.db')
 class Blog(Model):
     title = CharField()
-    content = TextField()
-    created_at = DateTimeField(default=datetime.datetime.now)
+    contents = TextField()
+    likes = IntegerField()
+    created_at = DateTimeField()
     class Meta:
         database = db
