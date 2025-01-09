@@ -23,7 +23,7 @@ def add():
         return redirect(url_for('create.create_next',title=title,contents=contents))
     return render_template('create_next.html')  # GETリクエストの場合の処理
 
-@create_bp.route('/next', methods=['GET'])
+@create_bp.route('/next')
 def create_next():
     title = request.args.get('title')
     contents = request.args.get('contents')
