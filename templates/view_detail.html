@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>投稿詳細</title>
 </head>
 <body>
@@ -23,5 +24,40 @@
         <p>コメントはまだありません。</p>
     {% endif %}
 
+    <textarea name="" id="comment-area"></textarea>
+    <button id="comment-button">コメントする</button>
+
+
+    <script>
+        // いいねボタンがクリックされた時の処理 
+        $('#like-button').on('click', function() {
+            $.post('/like', {
+                'blog_id': {{blog.id}}
+            }).done(function(data, textStatus, jqXHR) {
+                // jqXHR.statusを使ってレスポンスコードを確認
+                if (jqXHR.status === 200) {
+                    location.reload();
+                } else {
+                    alert('いいねに失敗しました');
+                }
+            });
+        });
+
+        // コメント投稿処理
+        $('#comment-button').on('click', function() {
+            $.post('/comment', {
+                'blog_id': {{blog.id}},
+                'comment': $('#comment-area').val()
+            }).done(function(data, textStatus, jqXHR) {
+                // jqXHR.statusを使ってレスポンスコードを確認
+                if (jqXHR.status === 200) {
+                    alert('コメントしました');
+                    location.reload();
+                } else {
+                    alert('コメントに失敗しました');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
