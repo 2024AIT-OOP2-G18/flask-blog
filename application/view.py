@@ -1,21 +1,24 @@
 from model.blog import Blog
+from flask import Blueprint, render_template, request, redirect, url_for
+
+view_bp = Blueprint('view',__name__)
 
 # ブログ一覧
-def blog_list():
+@view_bp.route('/view',methods=['GET'])
+def view():
     blogs = Blog.select()
-    for item in blogs:
-        print("--------------")
-        print(item.title)
-        print(item.content)
-        print("--------------")
-    print(blogs)
-    # テストで要素を追加
-    return "テスト追加しました"
+    return render_template('view.html',blogs=blogs)
+
 
 # ブログ詳細
+@view_bp.route('/view/<int:blog_id>',methods=['GET'])
 def blog_detail(blog_id):
     try:
+        # IDが一致するブログを取得
         blog = Blog.get_by_id(blog_id)
-        return f"タイトル：{blog.title}<br>内容：{blog.content}<br>記載日時：{blog.created_at}"
+            
+        print(blog)
+        return "test"
+        # return f"タイトル：{blog.title}<br>内容：{blog.content}<br>記載日時：{blog.created_at}"
     except Blog.DoesNotExist:
         return f"ID {blog_id} のブログは存在しません。"
