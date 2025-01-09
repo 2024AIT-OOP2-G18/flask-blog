@@ -4,24 +4,159 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>投稿詳細</title>
+    <style>
+        body {
+            font-family: "Arial", sans-serif;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        
+        .container {
+            width: 80%;
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        h1{
+            color: #333;
+            text-align: left;
+            font-size: 2.5em;
+        }
+
+        p {
+            color: #555;
+            line-height: 1.6;
+            font-size: 1.1em;
+            margin-left: 20px;  /* 左側の余白 */
+            margin-right: 20px; /* 右側の余白 */
+            margin-bottom: 20px;
+        }
+
+        #like-button {
+            background-color: #6ce2ff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 5px;
+            color: #fff;
+            margin-left: 20px;  /* 左側の余白 */
+            margin-right: 20px; /* 右側の余白 */
+        }
+
+        #like-button:hover {
+            background-color: #5ec3dc;
+        }
+
+        .comment-section {
+            margin-top: 40px;
+        }
+
+        .comment {
+            background-color: #fafafa;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            margin-left: 20px;  /* 左側の余白 */
+            margin-right: 20px;  /* 右側の余白 */
+        }
+
+        .comment h4 {
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .comment p {
+            font-size: 1em;
+            color: #666;
+        }
+
+        .back-button {
+            margin-top: 30px;
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #6ce2ff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        .back-button:hover {
+            background-color: #5ec3dc;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            font-size: 1em;
+            color: #333;
+            box-sizing: border-box;  /* パディングを含めて幅を設定 */
+            margin-left: 20px;  /* 左側の余白 */
+            margin-right: 20px;  /* 右側の余白 */
+        }
+
+        button[type="submit"] {
+            background-color: #6ce2ff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 5px;
+            color: #fff;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #5ec3dc;
+        }
+
+        h2, h3 {
+            font-size: 1.5em;  /* 「コメントを投稿する」と同じフォントサイズ */
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+    </style>
 </head>
 <body>
-    <h1>{{ blog.title }}</h1>
-    <p>{{ blog.contents }}</p>
-    <p>いいね数: {{ blog.likes }}</p>
-    <button id="like-button">いいね👍</button>
-    <p>作成日時: {{ blog.created_at }}</p>
+    <div class="container">
+        <h1>{{ blog.title }}</h1>
+        <p>{{ blog.contents }}</p>
+        <p>いいね数: {{ blog.likes }}</p>
+        <button id="like-button">いいね👍</button>
+        <p>作成日時: {{ blog.created_at }}</p>
 
-    <h2>コメント一覧</h2>
-    {% if comments %}
-        <p>
-            {% for comment in comments %}
-                {{comment.comment}}
-            {% endfor %}
-        <p>
-    {% else %}
-        <p>コメントはまだありません。</p>
-    {% endif %}
+        <div class="comment-section">
+            <h2>コメント一覧</h2>
+            {% if comments %}
+                {% for comment in comments %}
+                    <div class="comment">
+                        <p>{{ comment.comment }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>コメントはまだありません。</p>
+            {% endif %}
 
+            <h3>コメントを投稿する</h3>
+            <form action="{{ url_for('view.blog_detail', blog_id=blog.id) }}" method="post">
+                <textarea name="comment" placeholder="コメントを入力してください"></textarea><br/>
+                <button type="submit">コメントを投稿</button>
+            </form>
+        </div>
+
+        <a href="{{ url_for('view.view') }}" class="back-button"> ＜ ブログ一覧に戻る</a>
+    </div>
 </body>
 </html>
