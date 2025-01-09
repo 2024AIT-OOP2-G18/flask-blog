@@ -4,19 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='blog-style.css') }}">
-    <title>投稿画面</title>
+    <title>投稿が完了しました</title>
 </head>
 <body>
     <div class="container">
         <div class="head">
             <h1>ブログ投稿</h1>
         </div>
+            <h2>以下の内容で投稿が完了しました</h2>
+            <h3>{{ blog.title }}</h3>
+            <h4>{{ blog.content }}</h4>
         <div id="button-container">
-            <form action="{{ url_for('blog.add') }}" method="post">
-                <input type="text" name="title" placeholder="タイトル" value="{{ blog.title if blog else '' }}" /><br/>
-                <textarea name="content" placeholder="投稿内容">{{ blog.content if blog else '' }}</textarea><br/>
-                <button id="submit" type="submit">投稿</button>
-            </form>
+            <a href="{{ url_for('blog.edit', blog_id=blog.id) }}">
+                <button type="button" id="edit">投稿を編集</button>
+            </a>
             <button type="button" id="back" onclick="location.href='{{ url_for('home') }}'">HOMEへ戻る</button>
         </div>
     </div>
