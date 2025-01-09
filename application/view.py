@@ -16,9 +16,8 @@ def blog_detail(blog_id):
     try:
         # IDが一致するブログを取得
         blog = Blog.get_by_id(blog_id)
-            
-        print(blog)
         return "test"
         # return f"タイトル：{blog.title}<br>内容：{blog.content}<br>記載日時：{blog.created_at}"
     except Blog.DoesNotExist:
         return f"ID {blog_id} のブログは存在しません。"
+    
