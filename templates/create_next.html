@@ -12,13 +12,10 @@
             <h1>ブログ投稿</h1>
         </div>
             <h2>以下の内容で投稿が完了しました</h2>
-            <h3>{{ blog.title }}</h3>
-            <h4>{{ blog.content }}</h4>
+            <h3>{{ title }}</h3>
+            <h4>{{ contents }}</h4>
         <div id="button-container">
-            <a href="{{ url_for('blog.edit', blog_id=blog.id) }}">
-                <button type="button" id="edit">投稿を編集</button>
-            </a>
-            <button type="button" id="back" onclick="location.href='{{ url_for('home') }}'">HOMEへ戻る</button>
+            <button type="button" id="back" onclick="location.href='{{ url_for('view.view') }}'">HOMEへ戻る</button>
         </div>
     </div>
 </body>

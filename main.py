@@ -1,23 +1,18 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from model import init_db
-from application.create import create_bp
-from application.view import *
+from routes import blueprints
 
 app = Flask(__name__)
-app.register_blueprint(create_bp)
-app.register_blueprint(view_bp)
-
 init_db()
+
+# 各Blueprintをアプリケーションに登録
+for blueprint in blueprints:
+    app.register_blueprint(blueprint)
 
 # home
 @app.route('/')
-def home():
-    return "Hello, World!"
-
-# 詳細表示
-@app.route('/view/<int:blog_id>')
-def view_detail(blog_id):
-    return blog_detail(blog_id)
+def index():
+    return render_template('index.html')
 
 if __name__ == '__main__':
 
