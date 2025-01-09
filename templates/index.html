@@ -40,7 +40,7 @@
         .center-wrapper {
             display: table;
             width: 100%;
-            height: 100%; 
+            height: 100%;
             position: relative; /* 文字の配置を最前面に */
             z-index: 1;
         }
@@ -66,7 +66,7 @@
             <div class="font-big">
                 <h1>ようこそ<br></h1>
             </div>
-            <h1>ブログへ</h1>
+            <h1 onclick="location.href='{{ url_for('view.view') }}'">ブログへ</h1>
         </div>
     </div>
 </body>
