@@ -14,10 +14,6 @@ init_db()
 def home():
     return "Hello, World!"
 
-# 詳細表示
-@app.route('/view/<int:blog_id>')
-def view_detail(blog_id):
-    return blog_detail(blog_id)
 
 if __name__ == '__main__':
 
