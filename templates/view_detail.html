@@ -6,10 +6,22 @@
     <title>投稿詳細</title>
 </head>
 <body>
-    <!-- sample(データベース)の変数名は仮 -->
-    <form action="{{ url_for('view.detail',sample_id = sample.id) }}" method="post">
-        <h1>{{ sample.title }}</h1>
-        <h2>{{ sample.detail }}</h2>
-    </form>
+    <h1>{{ blog.title }}</h1>
+    <p>{{ blog.contents }}</p>
+    <p>いいね数: {{ blog.likes }}</p>
+    <button id="like-button">いいね👍</button>
+    <p>作成日時: {{ blog.created_at }}</p>
+
+    <h2>コメント一覧</h2>
+    {% if comments %}
+        <p>
+            {% for comment in comments %}
+                {{comment.comment}}
+            {% endfor %}
+        <p>
+    {% else %}
+        <p>コメントはまだありません。</p>
+    {% endif %}
+
 </body>
 </html>
