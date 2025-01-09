@@ -3,6 +3,7 @@ from model import init_db
 from routes import blueprints
 
 app = Flask(__name__)
+
 init_db()
 
 # 各Blueprintをアプリケーションに登録
@@ -13,6 +14,7 @@ for blueprint in blueprints:
 @app.route('/')
 def index():
     return render_template('index.html')
+
 
 if __name__ == '__main__':
 

@@ -3,13 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>投稿詳細</title>
 </head>
 <body>
-    <!-- sample(データベース)の変数名は仮 -->
-    <form action="{{ url_for('view.detail',sample_id = sample.id) }}" method="post">
-        <h1>{{ sample.title }}</h1>
-        <h2>{{ sample.detail }}</h2>
-    </form>
+    <h1>{{ blog.title }}</h1>
+    <p>{{ blog.contents }}</p>
+    <p>いいね数: {{ blog.likes }}</p>
+    <button id="like-button">いいね👍</button>
+    <p>作成日時: {{ blog.created_at }}</p>
+
+    <h2>コメント一覧</h2>
+    {% if comments %}
+        <p>
+            {% for comment in comments %}
+                {{comment.comment}}
+            {% endfor %}
+        <p>
+    {% else %}
+        <p>コメントはまだありません。</p>
+    {% endif %}
+
+    <textarea name="" id="comment-area"></textarea>
+    <button id="comment-button">コメントする</button>
+
+
+    <script>
+        // いいねボタンがクリックされた時の処理 
+        $('#like-button').on('click', function() {
+            $.post('/like', {
+                'blog_id': {{blog.id}}
+            }).done(function(data, textStatus, jqXHR) {
+                // jqXHR.statusを使ってレスポンスコードを確認
+                if (jqXHR.status === 200) {
+                    location.reload();
+                } else {
+                    alert('いいねに失敗しました');
+                }
+            });
+        });
+
+        // コメント投稿処理
+        $('#comment-button').on('click', function() {
+            $.post('/comment', {
+                'blog_id': {{blog.id}},
+                'comment': $('#comment-area').val()
+            }).done(function(data, textStatus, jqXHR) {
+                // jqXHR.statusを使ってレスポンスコードを確認
+                if (jqXHR.status === 200) {
+                    alert('コメントしました');
+                    location.reload();
+                } else {
+                    alert('コメントに失敗しました');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

@@ -1,4 +1,5 @@
 from model.blog import Blog
+from model.comment import Comment
 from peewee import Model, CharField, SqliteDatabase
 
 db = SqliteDatabase('database.db')
@@ -6,7 +7,7 @@ db = SqliteDatabase('database.db')
 def init_db():
     print("init_db")
     db.connect()
-    db.create_tables([Blog], safe=True)
+    db.create_tables([Blog, Comment], safe=True)
     db.close()
 
 # DB接続
