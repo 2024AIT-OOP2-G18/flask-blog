@@ -10,6 +10,6 @@ def init_db():
     db.close()
 
 # DB接続
-def connnect_db():
+def connect_db():
     print("connect_db")
     db.connect()
