@@ -18,9 +18,17 @@
                 required><br/>
                 <textarea name="contents" placeholder="投稿内容"
                 required>{{ blog.contents}}</textarea><br/>
-                <button id="submit" type="submit">編集</button>
+                <button id="submit" type="submit">編集する</button>
             </form>
+            <button 
+                type="button" 
+                id="back" 
+                onclick="location.href='{{ url_for('view.blog_detail', blog_id=blog.id) }}'"
+            
+            >
+                編集しないで戻る</button>
             <button id="deleteBtn" type="submit">削除</button>
+            
         </div>
     </div>
 </body>
