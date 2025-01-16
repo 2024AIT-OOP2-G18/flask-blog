@@ -1,9 +1,21 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>表示画面</title>
+    <script>
+        function formatCreatedAt(dateString) {
+            const date = new Date(dateString);
+            const year = date.getFullYear();
+            const month = date.getMonth() + 1; // 月は0から始まるので+1
+            const day = date.getDate();
+            const hours = date.getHours();
+            const minutes = date.getMinutes();
+
+            return `${year}年${month}月${day}日${hours}時${minutes}分`;
+        }
+</script>
     <style>
         /* 基本的なレイアウトとフォント設定 */
         body {
@@ -66,21 +78,22 @@
     <table>
         <thead>
             <tr>
-                <th>&nbsp;</th>
-                <th>ブログ一覧</th>
+                <th>タイトル</th>
+                <th>いいね数</th>
+                <th>作成日時</th>
             </tr>
         </thead>
         <tbody>
             {% for blog in blogs %}
             <tr onclick="location.href='{{ url_for('view.blog_detail', blog_id=blog.id) }}'">
                 <td>{{ blog.title }}</td>
-                <td>{{ blog.contents }}</td>
                 <td>{{ blog.likes }}</td>
-                <td>{{ blog.created_at }}</td>
+                <td><script>document.write(formatCreatedAt("{{ blog.created_at }}"))</script></td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
     <button onclick="location.href='{{ url_for('create.route') }}'">新規投稿</button>
 </body>
+
 </html>
