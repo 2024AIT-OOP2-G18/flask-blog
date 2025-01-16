@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <title>投稿詳細</title>
     <style>
         body {
@@ -10,7 +11,7 @@
             margin: 0;
             background-color: #f4f4f9;
         }
-        
+
         .container {
             width: 80%;
             max-width: 900px;
@@ -21,9 +22,8 @@
             border-radius: 8px;
         }
 
-        h1{
+        h1 {
             color: #333;
-            text-align: left;
             font-size: 2.5em;
         }
 
@@ -31,12 +31,10 @@
             color: #555;
             line-height: 1.6;
             font-size: 1.1em;
-            margin-left: 20px;  /* 左側の余白 */
-            margin-right: 20px; /* 右側の余白 */
             margin-bottom: 20px;
         }
 
-        #like-button {
+        #like-button, #comment-button {
             background-color: #6ce2ff;
             border: none;
             padding: 10px 20px;
@@ -44,50 +42,10 @@
             cursor: pointer;
             border-radius: 5px;
             color: #fff;
-            margin-left: 20px;  /* 左側の余白 */
-            margin-right: 20px; /* 右側の余白 */
+            margin: 10px 0;
         }
 
-        #like-button:hover {
-            background-color: #5ec3dc;
-        }
-
-        .comment-section {
-            margin-top: 40px;
-        }
-
-        .comment {
-            background-color: #fafafa;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 10px;
-            margin-left: 20px;  /* 左側の余白 */
-            margin-right: 20px;  /* 右側の余白 */
-        }
-
-        .comment h4 {
-            font-size: 1.2em;
-            color: #333;
-        }
-
-        .comment p {
-            font-size: 1em;
-            color: #666;
-        }
-
-        .back-button {
-            margin-top: 30px;
-            display: inline-block;
-            padding: 10px 15px;
-            background-color: #6ce2ff;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-left: 20px;
-            margin-right: 20px;
-        }
-
-        .back-button:hover {
+        #like-button:hover, #comment-button:hover {
             background-color: #5ec3dc;
         }
 
@@ -97,36 +55,30 @@
             padding: 10px;
             border-radius: 5px;
             border: 1px solid #ddd;
-            margin-bottom: 20px;
             font-size: 1em;
-            color: #333;
-            box-sizing: border-box;  /* パディングを含めて幅を設定 */
-            margin-left: 20px;  /* 左側の余白 */
-            margin-right: 20px;  /* 右側の余白 */
+            margin-bottom: 20px;
         }
 
-        button[type="submit"] {
-            background-color: #6ce2ff;
-            border: none;
-            padding: 10px 20px;
-            font-size: 1.2em;
-            cursor: pointer;
+        .comment {
+            background-color: #fafafa;
+            padding: 10px;
             border-radius: 5px;
-            color: #fff;
-            margin-left: 20px;
-            margin-right: 20px;
+            margin-bottom: 10px;
         }
 
-        button[type="submit"]:hover {
+        .back-button {
+            margin-top: 20px;
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #6ce2ff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .back-button:hover {
             background-color: #5ec3dc;
         }
-
-        h2, h3 {
-            font-size: 1.5em;  /* 「コメントを投稿する」と同じフォントサイズ */
-            margin-left: 20px;
-            margin-right: 20px;
-        }
-
     </style>
 </head>
 <body>
@@ -150,13 +102,48 @@
             {% endif %}
 
             <h3>コメントを投稿する</h3>
-            <form action="{{ url_for('view.blog_detail', blog_id=blog.id) }}" method="post">
-                <textarea name="comment" placeholder="コメントを入力してください"></textarea><br/>
-                <button type="submit">コメントを投稿</button>
-            </form>
+            <textarea id="comment-area" placeholder="コメントを入力してください"></textarea>
+            <button id="comment-button">コメントする</button>
         </div>
 
-        <a href="{{ url_for('view.view') }}" class="back-button"> ＜ ブログ一覧に戻る</a>
+        <a href="{{ url_for('view.view') }}" class="back-button">＜ ブログ一覧に戻る</a>
     </div>
+
+    <script>
+        // いいねボタンがクリックされた時の処理
+        $('#like-button').on('click', function() {
+            $.post('/like', {
+                'blog_id': {{ blog.id }}
+            }).done(function(data, textStatus, jqXHR) {
+                if (jqXHR.status === 200) {
+                    location.reload();
+                } else {
+                    alert('いいねに失敗しました');
+                }
+            });
+        });
+
+        // コメント投稿処理
+        $('#comment-button').on('click', function() {
+            const comment = $('#comment-area').val().trim();
+            if (comment === "") {
+                alert('コメントを入力してください');
+                return;
+            }
+            $.post('/comment', {
+                'blog_id': {{ blog.id }},
+                'comment': comment
+            }).done(function(data, textStatus, jqXHR) {
+                if (jqXHR.status === 200) {
+                    alert('コメントしました');
+                    location.reload();
+                } else {
+                    alert('コメントに失敗しました');
+                }
+            }).fail(function() {
+                alert('通信エラーが発生しました');
+            });
+        });
+    </script>
 </body>
 </html>

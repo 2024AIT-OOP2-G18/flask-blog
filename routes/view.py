@@ -3,17 +3,17 @@ from model.comment import Comment
 from flask import Blueprint, render_template, request, redirect, url_for
 from datetime import datetime
 
-view_bp = Blueprint('view',__name__)
+view_bp = Blueprint('view',__name__, url_prefix='/view')
 
 # ブログ一覧
-@view_bp.route('/view',methods=['GET'])
+@view_bp.route('/',methods=['GET'])
 def view():
     blogs = Blog.select()
     return render_template('view.html',blogs=blogs)
 
 
 # ブログ詳細
-@view_bp.route('/view/<int:blog_id>',methods=['GET'])
+@view_bp.route('/<int:blog_id>',methods=['GET'])
 def blog_detail(blog_id):
     try:
         # IDが一致するブログを取得
