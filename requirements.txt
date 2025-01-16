@@ -1,2 +1,7 @@
-flask
-peewee
+Flask==3.1.0
+Flask-Bcrypt==0.7.1
+Flask-Login==0.5.0
+Flask-Migrate==3.1.0
+Flask-SQLAlchemy==2.5.1
+Flask-WTF==0.15.1
+peewee==3.17.8
