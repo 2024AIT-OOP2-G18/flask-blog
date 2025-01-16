@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='blog-style.css') }}">
+    <title>投稿画面</title>
+</head>
+<body>
+    <div class="container">
+        <div class="head">
+            <h1>ブログを編集する</h1>
+        </div>
+        <div id="button-container">
+            <form action="{{ url_for('edit.route', blog_id=blog.id) }}" method="POST">
+                <input type="text" name="title" placeholder="タイトル" 
+                value="{{ blog.title }}" 
+                required><br/>
+                <textarea name="contents" placeholder="投稿内容"
+                required>{{ blog.contents}}</textarea><br/>
+                <button id="submit" type="submit">編集</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

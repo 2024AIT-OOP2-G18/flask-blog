@@ -15,6 +15,7 @@
             <h3>{{ title }}</h3>
             <h4>{{ contents }}</h4>
         <div id="button-container">
+            <button type="button" id="back" onclick="location.href='{{ url_for('view.blog_detail' ,blog_id=blog_id) }}'">投稿をみる</button>
             <button type="button" id="back" onclick="location.href='{{ url_for('view.view') }}'">HOMEへ戻る</button>
         </div>
     </div>
