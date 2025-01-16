@@ -94,3 +94,7 @@ body {
     cursor: pointer;
     border-radius: 5px;
   }
+
+  #back {
+    margin: 0 auto 48px;
+  }
