@@ -22,5 +22,11 @@ def route(blog_id):
         return redirect(url_for('view.blog_detail',blog_id=blog_id))
     if request.method == 'DELETE':
         blog = Blog.get_by_id(blog_id)
+        # 対応するコメントも削除
+            # 関連するすべてのコメントを削除
+        for comment in blog.comments:
+            comment.delete_instance()
         blog.delete_instance()
+
+
         return '', 200
