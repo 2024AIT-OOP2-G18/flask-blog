@@ -20,7 +20,27 @@
                 required>{{ blog.contents}}</textarea><br/>
                 <button id="submit" type="submit">編集</button>
             </form>
+            <button id="deleteBtn" type="submit">削除</button>
         </div>
     </div>
 </body>
+<script>
+    // 削除ボタン
+    const deleteBtn = document.getElementById('deleteBtn');
+    deleteBtn.addEventListener('click', () => {
+        if (window.confirm('本当に削除しますか？')) {
+            // DELETEリクエストを送信
+            fetch('{{ url_for('edit.route', blog_id=blog.id) }}', {
+                method: 'DELETE'
+            }).then((res) => {
+                if (res.ok) {
+                    alert('削除しました');
+                    window.location.href = '{{ url_for('view.view') }}';
+                } else {
+                    alert('削除に失敗しました');
+                }
+            });
+        }
+    });
+</script>
 </html>

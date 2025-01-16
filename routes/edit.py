@@ -5,7 +5,7 @@ from datetime import datetime
 # ブログ追加処理
 edit_bp = Blueprint('edit',__name__, url_prefix="/edit")
 
-@edit_bp.route('/<int:blog_id>',methods=['GET','POST'])
+@edit_bp.route('/<int:blog_id>',methods=['GET','POST','DELETE'])
 def route(blog_id):
     if request.method == 'GET':
         blog = Blog.get_by_id(blog_id)
@@ -20,3 +20,7 @@ def route(blog_id):
         blog.updated_at = datetime.now()
         blog.save()
         return redirect(url_for('view.blog_detail',blog_id=blog_id))
+    if request.method == 'DELETE':
+        blog = Blog.get_by_id(blog_id)
+        blog.delete_instance()
+        return '', 200
